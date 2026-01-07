@@ -1,0 +1,44 @@
+CentraleRouter#show running-config 
+Building configuration...
+
+Current configuration : 979 bytes
+!
+service password-encryption
+!
+hostname CentraleRouter
+!
+enable secret privilegedPXL
+!
+username admin secret adminPXL
+!
+ip ssh version 2
+ip domain-name pxl.local
+!
+interface GigabitEthernet0/0/0
+ ip address 192.168.10.1 255.255.255.0
+ duplex auto
+ speed auto
+ ipv6 address 2001:DB8:A::1/64
+!
+interface GigabitEthernet0/0/1
+ ip address 192.168.20.1 255.255.255.0
+ duplex auto
+ speed auto
+ ipv6 address 2001:DB8:B::1/64
+!
+line con 0
+ password consolePXL
+ login
+!
+line aux 0
+!
+line vty 0 4
+ password vtyPXL
+ login local
+ transport input ssh
+line vty 5 15
+ password adminPXL
+ login local
+ transport input ssh
+!
+end
